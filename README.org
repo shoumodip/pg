@@ -42,12 +42,12 @@ separated ~FILE~.
 The number of words in the password will be exactly ~COUNT~.
 
 #+begin_src console
-$ ./pg english.txt
+$ ./pg english.txt 2
 lecture_matter
-$ ./pg english.txt
+$ ./pg english.txt 2
 damage_weird
-$ ./pg english.txt
-unhappy_eye
-$ ./pg english.txt
-capital_chalk
+$ ./pg english.txt 3
+alone_unhappy_eye
+$ ./pg english.txt 3
+capital_chalk_town
 #+end_src
