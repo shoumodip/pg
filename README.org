@@ -26,13 +26,13 @@ The number of words in the password will range between ~3~ and
 
 #+begin_src console
 $ ./pg english.txt
-piano_increase_satisfy_bacon_sadness@96
+Piano_increase_satisfy_bacon_sadness@96
 $ ./pg english.txt
-edge_fragile_auction@74
+Edge_fragile_auction@74
 $ ./pg english.txt
-toward_also_hand_design_day_amateur@256
+Toward_also_hand_design_day_amateur@256
 $ ./pg english.txt
-wink_reunion_morning_ahead@84
+Wink_reunion_morning_ahead@84
 #+end_src
 
 ** ~pg FILE COUNT~
@@ -43,11 +43,11 @@ The number of words in the password will be exactly ~COUNT~.
 
 #+begin_src console
 $ ./pg english.txt 2
-lecture_matter@391
+Lecture_matter@391
 $ ./pg english.txt 2
-damage_weird@404
+Damage_weird@404
 $ ./pg english.txt 3
-alone_unhappy_eye@322
+Alone_unhappy_eye@322
 $ ./pg english.txt 3
-capital_chalk_town@96
+Capital_chalk_town@96
 #+end_src

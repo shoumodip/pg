@@ -123,7 +123,7 @@ func main() {
 	// Title-case the first word to further increase entropy.
 	// No check is being done if the first word even exists, because
 	// it is already handled in readFile().
-	strings.Title(password[0])
+	password[0] = strings.Title(password[0])
 
 	fmt.Print(strings.Join(password, "_"))
 
