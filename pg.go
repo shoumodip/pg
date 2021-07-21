@@ -61,7 +61,10 @@ func readFile(filePath string) ([]string, int) {
 	checkCond(err == nil, "could not read file: '%s'", filePath)
 
 	fileLines := strings.Split(string(fileBytes), "\n")
-	return fileLines, len(fileLines)
+	fileSize := len(fileLines)
+
+	checkCond(fileSize != 0, "no words defined in file '%s'", filePath)
+	return fileLines, fileSize
 }
 
 // Get the number of words to be used in the password, either from
@@ -120,7 +123,13 @@ func main() {
 		password = append(password, fileLines[getRandom(0, fileSize)])
 	}
 
+	// Title-case the first word to further increase entropy
+	strings.Title(password[0])
+
 	// Print the password
 	password = filterWords(password)
-	fmt.Println(strings.Join(password, "_"))
+	fmt.Print(strings.Join(password, "_"))
+
+	// Print a symbol and a random number because why not?
+	fmt.Println("@" + strconv.Itoa(getRandom(69, 420)))
 }
