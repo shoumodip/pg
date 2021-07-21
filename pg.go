@@ -36,7 +36,7 @@ func displayError(format string, a ...interface{}) {
 func invalidUsage(condition bool, format string, a ...interface{}) {
 	if condition {
 		displayError(format, a...)
-		fmt.Fprintln(os.Stderr, "Usage: pg LIST [WORDS]")
+		fmt.Fprintln(os.Stderr, "Usage: pg FILE [WORDS]")
 		os.Exit(1)
 	}
 }
@@ -104,7 +104,7 @@ func main() {
 	invalidUsage(argsCount < 2, "too few arguments to pg: '%d'", argsCount)
 	invalidUsage(argsCount > 3, "too many arguments to pg: '%d'", argsCount)
 
-	// Read the list file
+	// Read the dictionary file
 	filePath := os.Args[1]
 	fileLines, fileSize := readFile(filePath)
 
@@ -122,5 +122,5 @@ func main() {
 
 	// Print the password
 	password = filterWords(password)
-	fmt.Println("Password: " + strings.Join(password, "_"))
+	fmt.Println(strings.Join(password, "_"))
 }
