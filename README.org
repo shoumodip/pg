@@ -1,0 +1,53 @@
+* About
+Basically the idea is that a password consisting of "proper" words has
+a higher entropy than pseudo-random characters, like for example, a
+hash. This means that it is easier to remember *and* harder to crack.
+The only problem with this kind of password is coming up with random
+words...
+
+This tool takes a file which contains a list of words separated by
+newlines, and generates a password separated by underscores.
+
+* Quick setup
+#+begin_src console
+$ git clone https://github.com/shoumodip/pg
+$ cd pg
+$ go build pg.go
+#+end_src
+
+* Usage
+** ~pg FILE~
+Generate a password consisting of random words taken from a newline
+separated ~FILE~. For an example file, use ~english.txt~ supplied in
+this repo.
+
+The number of words in the password will range between ~3~ and
+~7~. See the constants ~MIN_WORDS~ and ~MAX_WORDS~ in ~pg.go~.
+
+#+begin_src console
+$ ./pg english.txt
+piano_increase_satisfy_bacon_sadness
+$ ./pg english.txt
+edge_fragile_auction
+$ ./pg english.txt
+toward_also_hand_design_day_amateur
+$ ./pg english.txt
+wink_reunion_morning_ahead
+#+end_src
+
+** ~pg FILE COUNT~
+Generate a password consisting of random words taken from a newline
+separated ~FILE~. 
+
+The number of words in the password will be exactly ~COUNT~.
+
+#+begin_src console
+$ ./pg english.txt
+lecture_matter
+$ ./pg english.txt
+damage_weird
+$ ./pg english.txt
+unhappy_eye
+$ ./pg english.txt
+capital_chalk
+#+end_src
