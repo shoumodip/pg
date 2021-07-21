@@ -53,14 +53,27 @@ func checkCond(condition bool, format string, a ...interface{}) {
 	}
 }
 
-// Read a file into an slice of strings separated by newlines.
+// Remove empty strings from a slice of words.
+// @param words []string The slice of words to filter
+// @return []string the filtered slice of words
+func filterWords(words []string) []string {
+	result := []string{}
+	for _, word := range words {
+		if word != "" {
+			result = append(result, word)
+		}
+	}
+	return result
+}
+
+// Read a file into a slice of strings separated by newlines.
 // @param filePath string the path of the file to read
-// @return slice of strings, number of lines
+// @return ([]string, int) the slice of strings, number of lines
 func readFile(filePath string) ([]string, int) {
 	fileBytes, err := ioutil.ReadFile(filePath)
 	checkCond(err == nil, "could not read file: '%s'", filePath)
 
-	fileLines := strings.Split(string(fileBytes), "\n")
+	fileLines := filterWords(strings.Split(string(fileBytes), "\n"))
 	fileSize := len(fileLines)
 
 	checkCond(fileSize != 0, "no words defined in file '%s'", filePath)
@@ -70,7 +83,7 @@ func readFile(filePath string) ([]string, int) {
 // Get the number of words to be used in the password, either from
 // command line arguments or from psuedo-random generators.
 // @param argsCount int The number of command line arguments
-// @return the number of words
+// @return int the number of words
 func getWordsCount(argsCount int) int {
 	if argsCount == 3 {
 		wordsCount, err := strconv.Atoi(os.Args[2])
@@ -83,38 +96,22 @@ func getWordsCount(argsCount int) int {
 }
 
 // Generate a pseudo-random number between the two arguments provided
-// @return a random number
+// @return int a random number
 func getRandom(min int, max int) int {
 	return min + rand.Intn(max-min)
 }
 
-// Remove empty strings from a slice of words.
-// @param words []string The slice of words to filter
-// @return the filtered slice of words
-func filterWords(words []string) []string {
-	result := []string{}
-	for _, word := range words {
-		if word != "" {
-			result = append(result, word)
-		}
-	}
-	return result
-}
-
 func main() {
-	// Command line arguments sanitization
 	argsCount := len(os.Args)
 	invalidUsage(argsCount < 2, "too few arguments to pg: '%d'", argsCount)
 	invalidUsage(argsCount > 3, "too many arguments to pg: '%d'", argsCount)
 
-	// Read the dictionary file
 	filePath := os.Args[1]
 	fileLines, fileSize := readFile(filePath)
 
-	// Generate the random seed for the integer randomizer
+	// Seed the randomizer
 	rand.Seed(time.Now().UnixNano())
 
-	// Get the words count
 	wordsCount := getWordsCount(argsCount)
 	password := []string{}
 
@@ -123,13 +120,13 @@ func main() {
 		password = append(password, fileLines[getRandom(0, fileSize)])
 	}
 
-	// Title-case the first word to further increase entropy
+	// Title-case the first word to further increase entropy.
+	// No check is being done if the first word even exists, because
+	// it is already handled in readFile().
 	strings.Title(password[0])
 
-	// Print the password
-	password = filterWords(password)
 	fmt.Print(strings.Join(password, "_"))
 
-	// Print a symbol and a random number because why not?
+	// Print a symbol ('@') and a random number because why not?
 	fmt.Println("@" + strconv.Itoa(getRandom(69, 420)))
 }
