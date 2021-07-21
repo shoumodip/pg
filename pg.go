@@ -24,9 +24,7 @@ const (
 // @param format string The format string
 // @param a interface the rest of the arguments to supply to Fprintf()
 func displayError(format string, a ...interface{}) {
-	fmt.Fprintf(os.Stderr, "error: ")
-	fmt.Fprintf(os.Stderr, format, a...)
-	fmt.Fprintln(os.Stderr)
+	fmt.Fprintf(os.Stderr, "error: " + format + "\n", a...)
 }
 
 // Display invalid usage information.
